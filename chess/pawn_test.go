@@ -81,19 +81,3 @@ func TestPredictPawnMoves(t *testing.T){
 	})
 	
 }
-
-// func comparePostions(expected []string, positions []string) bool{
-// 	var result bool 
-// 	for _, value:= range expected{
-// 		result = false
-// 		for _,position:= range positions{
-// 			if value== position{
-// 				result = true
-// 			}
-// 		}
-// 		if result== false{
-// 			return result
-// 		}
-// 	}
-// 	return result;
-// }
