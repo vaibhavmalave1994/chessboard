@@ -6,6 +6,6 @@ import(
 )
 
 func main(){
-	chess.SetNewPiece("king")
-	fmt.Println("hello world")
+	knight := chess.SetPiece("knight", "H8")
+	fmt.Println("predicted position", knight.PredictMoves())
 }

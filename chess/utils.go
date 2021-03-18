@@ -2,8 +2,8 @@ package chess
 
 import(
 	"strconv"
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 
@@ -38,7 +38,6 @@ func getForwardMoves(steps int, position *Position)([]Position, error){
 		if nextI+1<=8{
 			nextI = nextI+1
 			result = append(result, Position{I:nextI, J:nextJ})
-			fmt.Println("Position", result)
 		}else{
 			break
 		}
@@ -69,7 +68,7 @@ func getBackwordMoves(steps int, position *Position)([]Position, error){
 
 func getLeftMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get left moves",position.J)
+	
 	if position.J == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
@@ -87,7 +86,7 @@ func getLeftMoves(steps int, position *Position)([]Position, error){
 
 func getRightMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get right moves",position.J)
+	
 	if position.J == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
@@ -107,7 +106,7 @@ func getRightMoves(steps int, position *Position)([]Position, error){
 
 func getForwardRightMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get forward right moves",position.I,position.J)
+	
 	if position.I == 8 || position.J == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
@@ -128,7 +127,7 @@ func getForwardRightMoves(steps int, position *Position)([]Position, error){
 
 func getForwardLeftMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get forward left moves",position.I,position.J)
+	
 	if position.I == 8 || position.J == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
@@ -149,7 +148,7 @@ func getForwardLeftMoves(steps int, position *Position)([]Position, error){
 
 func getBackwardRightMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get backward right moves",position.I,position.J)
+	
 	if position.I == 1 || position.J == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
@@ -170,7 +169,7 @@ func getBackwardRightMoves(steps int, position *Position)([]Position, error){
 
 func getBackwardLeftMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get backward left moves",position.I,position.J)
+	
 	if position.I == 1 || position.J == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
@@ -195,4 +194,76 @@ func convertPositionCoordinatesToLetters(position *Position) string{
 		return fmt.Sprintf("%s%d",value,position.J)
 	}
 	return ""
+}
+
+func predictMovesUsingRules(rules *Rule, position *Position) []string{
+	var predictedMoved []string
+	var predictedMovedPositions []Position
+	for _,dir := range rules.Directions{
+		switch dir{
+		case "f" : 
+		   forwardMoves, err := getForwardMoves(rules.Step, position)
+		   if err == nil{
+				for _, position:= range forwardMoves{
+					predictedMovedPositions = append(predictedMovedPositions, position)
+				}
+		   }
+		case "b" : 
+		backwordMoves, err := getBackwordMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range backwordMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		case "l" : 
+		leftMoves, err := getLeftMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range leftMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		case "r" : 
+		rightMoves, err := getRightMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range rightMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		case "fr" : 
+		rightMoves, err := getForwardRightMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range rightMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		case "fl" : 
+		rightMoves, err := getForwardLeftMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range rightMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		case "br" : 
+		rightMoves, err := getBackwardRightMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range rightMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		case "bl" : 
+		rightMoves, err := getBackwardLeftMoves(rules.Step, position)
+		if err == nil{
+			for _, position:= range rightMoves{
+				predictedMovedPositions = append(predictedMovedPositions, position)
+			}
+		}
+		   
+		}
+	}
+
+	for _,position:= range predictedMovedPositions{
+		predictedMoved = append(predictedMoved, convertPositionCoordinatesToLetters(&position))
+	}
+
+	return predictedMoved
 }

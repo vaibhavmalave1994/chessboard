@@ -1,7 +1,7 @@
 package chess
 
 import(
-	
+	// "fmt"
 )
 
 // type Piece struct{
@@ -11,7 +11,7 @@ import(
 // }
 
 type Piece interface{
-
+	PredictMoves() []string
 }
 
 type Position struct{
@@ -24,14 +24,24 @@ type Rule struct{
 	Directions []string
 }
 
-func SetPiece(name string, position string)Piece{
+func SetPiece(name string, position string) Piece{
 	if name == "" || position == ""{
 		return nil
 	}
 
 	switch name{
 	case "king":
-		return &King{Name : name, Position: getPositionCoordinates(position)}
+		return SetKing("king", position)
+	case "pawn":
+		return SetPawn("pawn", position)
+	case "queen":
+		return SetQueen("queen", position)
+	case "rook":
+		return SetRook("rook", position)
+	case "bishop":
+		return SetBishop("bishop", position)
+	case "knight":
+		return SetKnight("knight", position)
 	}
 	return nil
 	
