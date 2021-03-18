@@ -23,7 +23,7 @@ func TestSetKing(t *testing.T){
 
 	t.Run("King: set name and position", func(t *testing.T){
 		result := SetKing("king", "H1")
-		if result.Name == "" || result.Rules ==nil || result.Position == nil{
+		if result.Name == "" || result.Position == nil{
 			t.Errorf("King: Expected type of piece got %v", result)
 		}
 	})
@@ -84,6 +84,9 @@ func TestPredictKingMoves(t *testing.T){
 
 func comparePostions(expected []string, positions []string) bool{
 	var result bool 
+	if len(expected) == 0 && len(positions)==0{
+		return true
+	}
 	for _, value:= range expected{
 		result = false
 		for _,position:= range positions{

@@ -25,14 +25,7 @@ func getPositionCoordinates(position string) *Position{
 	return &Position{x,y}
 }
 
-func getRuleForPice(piece string)*Rule{
-	switch piece{
-	case "king":
-		return &Rule{Step:1, Directions:[]string{"f", "b", "l", "r", "fr", "fl", "bl", "br"}}
-	}
 
-	return nil
-}
 
 func getForwardMoves(steps int, position *Position)([]Position, error){
 	var result []Position

@@ -28,10 +28,10 @@ func SetPiece(name string, position string)Piece{
 	if name == "" || position == ""{
 		return nil
 	}
-	
+
 	switch name{
 	case "king":
-		return &King{Name : name, Rules:getRuleForPice(name), Position: getPositionCoordinates(position)}
+		return &King{Name : name, Position: getPositionCoordinates(position)}
 	}
 	
 	return nil
