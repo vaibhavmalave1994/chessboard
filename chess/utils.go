@@ -29,14 +29,19 @@ func getPositionCoordinates(position string) *Position{
 
 func getForwardMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get forward moves",position.I)
 	if position.I == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.I+1<=8{
-			result = append(result, Position{I:position.I+1, J:position.J})
-		} 
+		if nextI+1<=8{
+			nextI = nextI+1
+			result = append(result, Position{I:nextI, J:nextJ})
+			fmt.Println("Position", result)
+		}else{
+			break
+		}
 		steps--
 	}
 
@@ -45,14 +50,18 @@ func getForwardMoves(steps int, position *Position)([]Position, error){
 
 func getBackwordMoves(steps int, position *Position)([]Position, error){
 	var result []Position
-	fmt.Println("into get backword moves",position.I)
 	if position.I == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.I-1>=1{
-			result = append(result, Position{I:position.I-1, J:position.J})
-		} 
+		if nextI-1>=1{
+			nextI = nextI-1
+			result = append(result, Position{I:nextI, J:nextJ})
+		}else{
+			break
+		}
 		steps--
 	}
 	return result, nil
@@ -64,9 +73,12 @@ func getLeftMoves(steps int, position *Position)([]Position, error){
 	if position.J == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.J-1>=1{
-			result = append(result, Position{I:position.I, J:position.J-1})
+		if nextJ-1>=1{
+			nextJ = nextJ-1
+			result = append(result, Position{I:nextI, J:nextJ})
 		} 
 		steps--
 	}
@@ -79,10 +91,15 @@ func getRightMoves(steps int, position *Position)([]Position, error){
 	if position.J == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.J+1<=8{
-			result = append(result, Position{I:position.I, J:position.J+1})
-		} 
+		if nextJ+1<=8{
+			nextJ = nextJ+1
+			result = append(result, Position{I:nextI, J:nextJ})
+		}else{
+			break
+		}
 		steps--
 	}
 	return result, nil
@@ -94,9 +111,15 @@ func getForwardRightMoves(steps int, position *Position)([]Position, error){
 	if position.I == 8 || position.J == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.I+1<=8 && position.J+1<=8{
-			result = append(result, Position{I:position.I+1, J:position.J+1})
+		if nextI+1<=8 && nextJ+1<=8{
+			nextI = nextI +1
+			nextJ = nextJ+1
+			result = append(result, Position{I:nextI, J:nextJ})
+		}else{
+			break
 		} 
 		steps--
 	}
@@ -109,9 +132,15 @@ func getForwardLeftMoves(steps int, position *Position)([]Position, error){
 	if position.I == 8 || position.J == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.I+1<=8 && position.J-1>=1{
-			result = append(result, Position{I:position.I+1, J:position.J-1})
+		if nextI+1<=8 && nextJ-1>=1{
+			nextI = nextI +1
+			nextJ = nextJ-1
+			result = append(result, Position{I:nextI, J:nextJ})
+		}else{
+			break
 		} 
 		steps--
 	}
@@ -124,9 +153,15 @@ func getBackwardRightMoves(steps int, position *Position)([]Position, error){
 	if position.I == 1 || position.J == 8{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.I-1>=1 && position.J+1<=8{
-			result = append(result, Position{I:position.I-1, J:position.J+1})
+		if nextI-1>=1 && nextJ+1<=8{
+			nextI = nextI -1
+			nextJ = nextJ+1
+			result = append(result, Position{I:nextI, J:nextJ})
+		}else{
+			break
 		} 
 		steps--
 	}
@@ -139,9 +174,15 @@ func getBackwardLeftMoves(steps int, position *Position)([]Position, error){
 	if position.I == 1 || position.J == 1{
 		return result, errors.New("NO_FURTHER_MOVES") 
 	}
+	nextI := position.I
+	nextJ := position.J
 	for steps>0{
-		if position.I-1>=1 && position.J-1>=1{
-			result = append(result, Position{I:position.I-1, J:position.J-1})
+		if nextI-1>=1 && nextJ-1>=1{
+			nextI = nextI-1
+			nextJ = nextJ-1
+			result = append(result, Position{I:nextI, J:nextJ})
+		}else{
+			break
 		} 
 		steps--
 	}

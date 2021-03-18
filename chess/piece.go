@@ -33,7 +33,6 @@ func SetPiece(name string, position string)Piece{
 	case "king":
 		return &King{Name : name, Position: getPositionCoordinates(position)}
 	}
-	
 	return nil
 	
 }
